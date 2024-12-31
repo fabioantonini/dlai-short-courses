@@ -1,0 +1,17 @@
+{
+    "api_key": "",
+    "url": "https://api.openai.com/v1/images/generations",
+    "headers": {
+        "Content-Type": "application/json"
+    },
+    "payload": {
+        "prompt": "A futuristic cityscape at dusk with flying cars and neon lights in Picasso'style",
+        "n": 3,
+        "size": "1024x1024",
+        "response_format": "url",
+        "user": "1234",
+        "style": "vivid"
+    },
+    "filename": "generated_image",
+    "timeout": 30
+}

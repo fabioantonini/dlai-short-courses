@@ -1,0 +1,98 @@
+Before getting into the details of configuration-driven
+development, let's spend a little
+time thinking about design paradigms and how you can work with LLMs
+to choose them. By design paradigm, I mean, really any kind of
+structured approach to software architecture
+and organization that addresses common
+development challenges. These paradigms will provide guiding principles and patterns in solving recurring problems for software design
+and implementation. Some of these approaches
+you may be familiar with, like object-oriented programming or model-view-controller, and they're so popular
+that they're already baked into programming languages
+and popular frameworks. You might not even feel like
+you're choosing to use them. You may be just using Java, or C#, or Flask, or React and the
+paradigms and patterns are already baked into those
+languages or frameworks. Nevertheless, they can have profound impact on the way that your software
+is structured, the way that your team
+interacts with one another, and even the way you
+think about software. Other paradigms you may have
+heard about in industry, like a microservices
+architecture or test-driven development, may have support in the
+tooling that you use, but your team would still
+need to actively decide to take a particular approach
+when building software. In these examples, modularity or reliability may be
+important concerns. Deciding to adhere to
+one of these paradigms means valuing some aspects
+of your project over others, and it could impact what
+it's going to be like to work on that code base
+for years into the future. In other words, these
+are big decisions. Let's suppose you've been given the responsibility of kicking
+off a whole new project. How do you think through all of these high-level decisions? Well, likely you'd pull from your own experiences or maybe those of friends
+and teammates, or maybe even do
+some web searches. But as I'm sure you're
+expecting me to say, I would also recommend that
+you try chatting with an LLM. Here's a prompt I wrote
+as I was thinking through the project that you're going to see in this module. I assigned the LLM the role of an expert in software
+design paradigms. I gave a context on the DALL-E project that
+we'll be building later, and I explained some of the design constraints for how this project will
+be built and used, like the fact that it might be deployed in different contexts, depending on your end users. The LLM responded with a variety of paradigm
+recommendations, including short summaries of each approach and the
+benefits of using them. After reading a bit
+about each paradigm it gave me, configuration-driven
+development, or CDD, seemed like a good match for some of the constraints that I
+shared in the prompt. So I continued to
+prompt the LLM for more details about the benefits of this approach and how
+it could be implemented. The LLM responded with a longer description of
+configuration-driven development, its benefits, drawbacks, and what implementing it
+looks like in practice. Since this is the paradigm we'll be using later
+in this module, let's talk through some
+of these details now. Configuration-driven development is a software design approach where the behavior
+of an application is controlled through external
+configuration files rather than through hard-coded
+values in the source code. Imagine being able to tweak your app's behavior
+simply by editing a file. That's the magic of CDD. In practice, it works like this. Instead of hard-coding values
+into your source code, you can create external
+configuration files. Now, these files
+are typically in easy-to-read formats
+like JSON or YAML. These configuration files can then control all
+sorts of things, like which API keys and end
+points the app should use, or the language a page
+should appear in, or rather even the pages
+in light or dark mode. It could even be backend details like how to handle logging. Your project source
+code will then ingest these details in order to configure the application
+with the provided settings. This approach has a
+number of benefits. An obvious one is ease
+of customization. This approach allows teammates, including non-technical
+colleagues to easily change an application's
+behavior without editing the source code. It also leads to a
+flexible software that can then easily
+be configured for different environments and it can even reduce
+the risk of bugs, since changing
+configuration files doesn't require editing
+your source code. CDD does have some drawbacks. It can become complex to manage many different
+configuration files. It can also become more complicated to debug
+issues because your software is
+now split across both source code and
+configuration files. You can also have some
+security risks if you place sensitive information inside
+of configuration files. So how could you decide whether or not to implement
+this paradigm? Well, again, I think
+one path forward is to ask an LLM for advice on
+weighing these pros and cons. When I did that, I
+got a useful set of considerations like my
+project's customization needs, the capabilities of my team, the variety of environments
+it will be deployed in, long-term scalability
+considerations, security concerns, and so forth. Of course, these are all important factors
+that you should consider. For this module, you're going to be working to implement CDD. Now, I do know that in
+your professional life, there may be many
+other paradigms that better fit your
+project's needs, but I still encourage
+you to think about how an interactive conversation like this could help you make
+your own design decisions. The goal isn't to replace your role as the decision maker, but to expand the number of solutions that you consider
+and help you think through the pros
+and cons of each of those decisions in the
+context of your project. Now that you're familiar
+with the basics of CDD, let's consider how you can
+actually implement it. A key task at the heart of CDD is reading and writing
+configuration files. So join me in the
+next video to go a little bit deeper on
+doing that in Python.

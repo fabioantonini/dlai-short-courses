@@ -1,0 +1,17 @@
+I want to share
+some details about the graded exercise for this module to help set
+you up for success. I've provided code in a
+notebook to create and populate a database for
+a simple social network, and the notebook is called
+SocialNetworkDB.ipy notebook. The social network includes
+people and clubs and captures both friendship and membership relationships
+between these entities. Here's the task that
+you have to complete. First, you're going
+to create code that given a particular club, will find all of the
+members of that club. Then you're going to
+create code that finds everybody that a
+particular person considers to be their friend. Then, lastly, you're going to create code that
+given the name of a person finds all of the people that considers
+them their friend. Hope you enjoy this activity,
+and when you're done, I'll see you in the next module where we're going to talk
+about design pattern?

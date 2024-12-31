@@ -1,0 +1,87 @@
+In this module, you've
+explored how an LLM can help you write useful, well
+constructed documentation. From sure inline comments to more extensive documentation of a software library or SDK. You've seen how an LLM can format your comment strings
+to ensure readability, clarity, and easy processing
+by automated tools. Although Python is the working
+language of this course, the principles of good
+documentation you've been working on largely apply in
+other languages, as long as you think through any language specific
+conventions. Best practices do vary
+between languages, and as always, an LLM can
+help you learn about these. One obvious difference
+is in comment syntax, and LLM can always
+help you make sure you're getting this right for whatever language
+you're working in. The amount of
+commenting also varies. For example, some languages are intrinsically more didactic
+in their coding styles. Python is actually a
+really good example of this along with Ruby and Go. So comments can be more
+minimal because the code itself when written well,
+explains what's happening. Other languages like Java, C#, or PHP tend to be more
+formal and verbose in their documentation
+and commenting with clearly defined
+structures to follow. And when it comes to
+automated documentation, some languages have great
+support for this built in, where others can rely
+on third parties. Older languages like C and Fortran don't have much
+support for this at all. Again, an LLM can
+help you navigate these differences and offer
+advice on tools to use. Let's work through a couple of examples of working
+with an LLM to refine documentation
+in other languages. Let's start with Java. And if you're
+familiar with Java, it has a format called
+Javadoc for the automatic generation
+of documentation. Here's some Java code for the same BubbleSort
+algorithm that you saw in Python in the
+last few videos. You can immediately
+see that this code is less easy to read than
+the Python version. With a prompt to provide Javadoc
+comments that are clear, extensive, and relevant,
+I got this code. You can immediately see how verbose the commenting is here. First, for the function itself, it is a bit too long to
+fit it all on one slide, but you can see how
+the Javadoc was done. It was smart enough
+to infer that this is a BubbleSort algorithm
+from its contents. Similarly, it created Javadoc for the main function
+describing what it does. If you're familiar
+with the Java SDK, it comes with a Javadoc tool, which can then read
+your source code, take those comments, and
+turn them into HTML. Here's an example page that was created from these comments. Using an LLM can really reduce a lot of the friction
+in generating these. They often require
+very specific formats and a lot of trial and error
+to get them just right, and I think an LLM
+really speeds that up. JavaScript is another
+language with a well formalized
+documentation string format, and it's called
+the JSDoc syntax. Let's take a look at an example. Here is the JavaScript code
+to BubbleSort an array. It is very similar
+to the others, barring all those
+syntactical differences. Now let's ask an LLM to add clear extensive
+comments in JSDocs to the code with a
+prompt like this. The model will give output that should
+look similar to this. The structure of the comments is very similar to that in Javadoc. Now, just like Python, there are several tools available
+to take the comments in your code and use them to
+generate document pages. You may already
+know about these, but if you don't, just
+ask an LLM for ideas. I got several
+suggestions for tools, and I decided to try
+out the JSDoc tool, and you can install this in your development
+environment with the note package manager NPM. We'll discuss NPM in a bit more detail
+in the next module. But for now, I'll leave
+it as an exercise for you to work out how to
+install the JSDoc tool. Asking an LLM, is a
+good place to start. If you use the JSDoc tool
+that's available to node users, you can quickly convert your JavaScript code
+to documentation. Here's the page
+that was generated for the BubbleSort that
+we just looked at. In fact, it gave a lot
+more than just a page. Indeed, it gave a whole site with deep links into
+the source code, so you can see where
+the various functions are. That's pretty cool. As you've seen, LLMs are helpful partners
+for writing clear, well structured comments
+and documentation, and they can also help
+you identify and use tools that can generate beautiful documentation in
+many different languages. All of this will help others hit the ground running
+with your code. In the next video, we're going
+to wrap up by discussing one last benefit of good
+up-to-date documentation, and that is it helps
+make your code easier to maintain once it's in
+production. I'll see you there.

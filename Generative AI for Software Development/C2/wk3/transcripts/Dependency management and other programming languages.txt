@@ -1,0 +1,44 @@
+In this module, you've seen how
+dependencies can allow you to take advantage of the work of other developers
+and how LLMs can help you manage the challenges and complexities
+that these dependencies introduce. I've been showing you all of these
+examples in Python, but more likely than not, your work has you focused on
+different or even multiple languages. The same ideas I showed you at
+the beginning of this module can apply regardless of the language and
+framework that you're working in. Only the tools will be different. So let's quickly review the strengths and
+weaknesses of LLMs. As you've seen, they're great
+at brainstorming libraries and packages that you can use in your project. They can help you learn more
+about a dependency, and they can sometimes help you identify
+dependency conflicts and vulnerabilities. And finally, they're great tools to help
+you identify solutions to these issues. That said, LLMs are only as
+good as their training data. It's important to be aware of
+the cutoff date on the training data of the model you're using, and
+whether or not it can access the web. And in many instances, LLMs may be
+less helpful with obscure libraries. But let's take a look at how to
+apply the concepts that we've learned to other languages. For example, let's say you're
+a JavaScript developer working with node. NPM is a terrific package manager which
+does more than just install packages for you. It can manage dependencies from the NPM
+registry to always ensure that the version of a library you're using will have
+the correct dependencies installed. Where an LLM can be your friend is
+to help you analyze your code for the right dependencies, or
+even audit your current dependency set. So if you're familiar with using NPM, then
+you know that it uses a package.json file like this, and
+this shows you everything about your app, including the desired dependencies and
+their versions. You can then pass this to your LLM to ask
+for advice and it will give you tips like run npm audit to check for
+vulnerabilities in your dependencies. And in this case,
+thankfully it found nothing in my app, but you should see what you can find in yours. You can run bpm outdated
+to check on packages, and in my case actually there was
+an outdated package found, and it was easy to fix with npm install
+the package name followed by at latest. So that brings us to
+the end of this module. Remember, whatever language
+you're working with, LLMs can help summarize
+the libraries available to you. Debug dependency conflicts and
+even help you sort through potential vulnerabilities, especially when working
+with a larger team of developers. It's not uncommon that you're
+going to have to switch back and forth between multiple languages and
+environments. An LLM can help you get oriented with how
+things work in any new environment and guide you to making wise choices with
+your team on how to tackle problems. I hope that some of the ideas you've
+learned here will empower you and your team to build even
+more exciting projects.

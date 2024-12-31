@@ -1,0 +1,82 @@
+To begin developing a
+high-level sense of how an LLM can help you think
+through testing strategies, let's begin with a
+basic Python example. It's a Flask app with a web API. Flask, if you're not
+familiar with it, is a lightweight web
+framework for Python, and it's perfect for
+our demonstration. Let's walk through
+the code and we'll take a close look
+at how it works. This app has a single
+endpoint/API/greet/name, and this will take a name as a parameter and return
+a greeting message. If you're running it in a
+shared environment like Colab, you have to change it a
+little to use threading. Notebooks like Jupyter or
+Colab will always finish the code in the
+current cell before they move on to the next one. If you want to
+launch a server with an API that you're
+going to call, like we're going
+to be doing here, it does need to run
+in a separate thread, and that will let you get on with the rest of your notebook. You probably would not want to do this in a production
+environment, but for learning purposes with a notebook, it's perfectly okay. Once you have a running API,
+if it's on your server, you can call it with cURL, or if you want to use Python, you can use requests like this. This will be the IP
+address of your server. If you're running it in Colab
+with the threading code, Colab will report back to you
+the address of the server. Make sure you use the one
+that's reported back to you instead of the address
+that's in the slides. Now that you have your
+example up and running, pause the video and think about what test cases you might
+want to use for your API. What data might you pass in to check if it's
+behaving properly, and how would you break it? Hopefully, you came
+up with a few ideas. Now I'd like you to
+try using GPT or another LLM as your
+testing partner and see what it comes up with. In the last course,
+you practiced using a set of prompting
+best practices to guide the LLM to the output that you wanted.
+Here's a quick recap. You should always be
+specific in your prompts and provide details and
+context about your problem. Assigning a role can help the model tailor the
+output that you receive. Taking that a step further by asking the model to
+behave as an expert and critique your work
+can help you get really specific
+well-formatted output. Then last, bringing
+your own expertise into the mix and having
+that back and forth with the model can help
+you steer the LLM to write the exact code
+that you want and need. With these best
+practices in mind, here's an example prompt
+that can help you think through testing strategies
+for that simple web app. As an expert software
+tester who's teaching a new person
+how to write test cases, can you please analyze
+this code and provide a set of test cases
+explaining each one? Here's what I got when I
+used this prompt with GPT. Remember, LLMs are
+probabilistic in nature, so the exact output that you'll get will depend on
+a number of factors such as changing random seeds or indeed the model version
+that you're using. It takes a look at my
+code, it analyzes my code, understands it defines
+what it's doing, but more importantly, it
+gives me the test cases. The first, of course,
+is the basic greeting. The basic greeting is
+/API/greet something, and the expected output will be JSON message, Hello, something. The second test case then would
+be URL encoding handling. So if I passed in a string
+that has a space in it, for example, John Doe, it would be percent 20 is the
+URL encoding of that space, but I expect my output not
+to have the URL encoding, and it would just
+say, Hello, John Doe. The model goes on to suggest several other test cases
+like special characters, empty names, numeric
+input, and so on. All of these are
+important corner cases to consider and test for. Scrolling to the bottom
+of the response, you can see the
+model also included implementations of each
+of these test cases. Now, the product you used to write tests here
+was pretty generic. You didn't specify any particular testing
+strategy, for example. The tests the LLM suggested here mainly looked
+at functionality, and they're pretty
+representative of the type of manual exploratory
+testing that you might do during
+early-stage development. Let's now move on to
+the next video to take a more detailed look at
+exploratory testing, and in particular,
+how you can use an LLM to help you and your
+colleagues in that process.

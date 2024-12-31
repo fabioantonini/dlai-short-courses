@@ -1,0 +1,87 @@
+So I'm going to start in Colab, and I'm going to be using Colab in a way
+that you may not have seen previously. But if you look at the tabs
+along the left on Colab, this one here gives you a terminal. So I'm looking at this terminal, and
+Sphinx is already preinstalled on it. So the first thing I'm
+going to do is just, I'm going to make a new directory in here
+that I'm just going to call Sphinx test. And then within that directory,
+well, let me change to it first, I'm going to change to sphinx-test. And if you use this view over here,
+the files view, you can actually see
+the directory has been created. So within that directory I'm
+going to run the sphinx-quickstart, And it's going to ask
+me a lot of questions. So let's start with this first question. And it's going to ask if I want to
+separate the source and build directories, yes or no. You'll see the default is no, but in this
+case, I'm going to say yes because I just want to make sure that these things are
+separate and it's a little bit cleaner for me to use. The second thing it asks is
+going to be the project name and that's where I could just give a name,
+anything that I want, really. So I'm just going to
+call this Sphinx Test, author name, it's just going to be me. Project release, so this is, as you can see, here's where you can
+give some notes about project release. You can ask ChatGPT for
+some details about it. I'm just going to leave it blank, and then it's going to ask
+about the project language. I'm just using English,
+which is the default. And now I'm ready to go,
+everything is set up for me, everything has been initialized. So the next thing we can do is
+take a look at this directory. I need to refresh it, then we can see that
+a whole bunch of good stuff has been made for me in here, build, source,
+make.bat, all of that kind of thing. All right, so
+the next thing I need, of course, is a file that I'm going to have, that I'm
+going to build some documentation for. So let's start on doing that one next. Now that, of course,
+is going to be in my source. And in my source, you can see I have
+a bunch of files in here already, but I just want to create a new one. And I'm going to do the area.py that
+we were showing in the slide, so I'm going to call that area.py. And now I can double-click on
+area.py to open it up in here so I can start editing it. So here I've just pasted in the code and with this little star is on here,
+that means it needs to be saved. So Ctrl+S, or Cmd+S on a Mac,
+we'll save it, the star has gone away. So we can see it's just the area
+that we were using previously, that source code to calculate the area,
+and we have the documentation in there. So the next thing that we're going to need
+within our sphinx-test is another new file, which will be the area.rst. That contains some of the details that
+we need to define the documentation. So I'm just going to say area.rst,
+and I'm going to open that up. Oops, I put it in the wrong directory. Let me make sure it's in
+the source directory, and then I'm going to open that up. Again, it's just a blank file, and
+its contents will look like this. And this is what we've seen in the slides,
+and I'll provide all of these files in the download as well so
+you know how that they should look. Okay, so now we have the area.py done and
+the area.rst done. Looking good. We're heading in the right direction. Next we should take a look at Conf PI. Now, if we notice in here, import sys and import os have been commented out, so
+I'm going to comment them back in. And then the next thing is the syspath
+we can see that's commented in first and this is giving us the absolute
+path to our content. But in the case of now we're
+currently running it in Colab, this is incorrect, right? So in Colab we're in /content and then, as you can see here,
+/sphinx-test and /source. So I'm going to change this to
+be /content/sphinx-test/source. And where did I get the /content from? If you move up a directory,
+we see it's the content. This is the root directory. In Colab,
+we were in the content directory, so it'll be /content/sphinx-test/source
+is where we're working. And then one other change that we need
+to make, and this should have been in the instructions that you got
+from chat GPT in the extensions. So we want to do order documentation here,
+so we're going to use the Sphinx extension for that,
+which should be just sphinx.ext.autodoc. Don't like the bracket being on a separate
+line, so I'm just going to go there, and we're going to save this. Now my next change will be the index RST. If we go down and we open this one up and
+all of this code is in the slides, what we need to add is our area module. It hasn't been added so I'm just going
+to add it in here, area like so. And the indentation, it really should
+be underneath the colon caption. So I put the indentation there,
+hope that that works, but let's see. So now all of our configuration
+is set up correctly. I'm going to go back to the Terminal,
+I'm just going to clear the windows so that we can see. And then up here I'm going to say make
+html, and Sphinx is going to run. And it succeeded, and
+my HTML pages are in /build/html. So if I open this up and I go to html,
+I should see that there's an area.html. There is, so
+it has compiled this one for me, this documentation off of that area page. kind of hard to read now because
+it's just straight HTML, but I provided a download for you. And I'll show you what this would
+look like in the download, and it looks like this. I guess I called my page Sphinx TEst,
+sorry. This is the one that's
+available in the download, that you see I recorded in the video where
+I just had a little bit of a typo there. But we can see that the area module
+has now been documented fully for us. Area.calculate_area was the method,
+and it gives us those parameters. So if you imagine if you had a lot
+of modules and a lot of code here, now the sphinx would be able to
+go through that, compile them and give you documentation like this and
+thats it. This is just scratching the surface
+of what you can do with automatic documentation. But hopefully it helped you understand the
+possibilities of working with an LLM not just to prepare your code for
+auto documentation, but also to help you navigate an environment like Sphinx
+if you weren't already familiar with it. Having clean, easy to read documentation
+in hand will definitely make it easier for your colleagues,
+not just developers but also testers, security experts, developer advocates and
+others to understand and use your code. This video has been very focused
+on Python code and tooling, but the same principles will apply if
+you're working in different languages. We'll take a look at a couple
+of examples in the next video.

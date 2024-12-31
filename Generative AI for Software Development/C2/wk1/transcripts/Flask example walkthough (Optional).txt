@@ -1,0 +1,104 @@
+This video is a quick
+walk through of the Flask application you'll be analyzing for security issues. Especially if you're
+unfamiliar with Flask, this should help you get
+situated and lead to a more fruitful
+conversation with your LLM. If you're already
+comfortable with Flask, feel free to skip
+this walk through. For this one, the
+first thing we need to do is install SQL alchemy. That's going to take a
+couple of minutes to do. While that's working, I'm just going to look at
+some of the code. In our code, what
+we're doing is we're creating a new
+Flask application, and this Flask application
+is going to have a database. I'm specifying the database URI is going to be
+sqlite//users.db. Once we have this
+setup now and we have a database setup using SQL Alchemy, it's
+really as easy as that. The next thing I want to
+do is with this database, it's going to be having
+a bunch of users. I'm going to create
+a class user, and that class user is going
+to be using the DB model, and the user is just
+going to have an ID, a user name, and the password. When I run this, it's going
+to create an app context, create my database,
+and now that database, I'll be able to
+add users to that, and it's just going
+to give me some of the usual stuff like welcome to security testing Demo
+map to the Slash route. Basically the home
+page, the root of it. But then for using users
+and for manipulating users, just take a quick look
+at what's going on here. First of all, consider the HTTP methods
+that I'll be using. I'm going to be routing to the user's endpoint
+with a get method. In this case, I've defined
+that if I want to get users, by definition, that's
+going to return all users. It's going to be user.query.all. As you imagine, that's going to query the database
+for all users, and then it's going
+to return them Jsonified with the users
+user name and user password. Now, of course, in
+a real application, you wouldn't do this
+because it would be a bit of a security leak, but you'd have some
+an admin endpoint or an admin interface
+that will allow the admin to be able to look at all the users and that
+would run code like this. Secondly, also want to
+get, so get/user/number. That's then going to query the database
+to find that user, and if they exist, then return that user's
+username and password. Highly insecure, I know, but again, just
+for demo purposes. If it doesn't exist,
+it can return a user not found with a 404. Now, when you want
+to add a user, you're generally not
+going to be getting that. You're going to be posting. Of course, the route will
+also support a slash user, but this time with the post
+method, and of course, the post method is just
+going to add a new user. It's going to accept
+two parameters, the username and password, and then it's going
+to add a user with that username and
+password to the database. If it works, you'll get the
+return message in JSON, the user was added successfully. Now another method
+in HTTP is put, and this is perfect for
+editing an existing user. If you put /user/ID, and then you specify
+username and password, you will change the existing
+username and password. Notice that the signature
+is exactly the same. It's going to be slash
+user an identifier, and the exactly the same as you have forgetting the
+particular user. But when you do the PUT method, you're indicating that you're putting some data
+up to the server, and as a result, that data is going to change the actual user. Then similarly for delete, as you can imagine, it's
+just going to be a case of, you're going to pass up an ID will delete that user and then return the appropriate
+messages. This has been run. It's already good to go, so I'm going to run this code next. Now, the code is run, the server is up and running, it
+should be good to go. We can see this
+threading dot thread allows you to use it in Colab, and we have the server actually
+running here 172.280.12. Now, if I curl to this server, I can simulate what it would
+be like calling that server. If I were to curl a
+get to list all users, well, we've got no users
+yet, so this would be empty. If I were now to curl a
+get for slash user one, I would be expecting to look
+for user one, and of course, my message comes
+back that there is no user one that
+hasn't been found. Now let's think about posting
+to create a new user. I'm going to post to the
+slash user endpoint, and I'm going to
+pass up some JSON with user name test
+user password, secure password because
+it is very secure, and when I run it, we'll see the user has
+been added successfully. I could come over here
+and I could try to list all users now and we could see
+that user ID one is there, or I could specifically
+try to find user one and we see that user
+ID one is there. Cool. Now if I want to
+put, what does that do? Remember that edits it. What I'm going to do
+is I'm going to change the user's password
+from secure password to new secure password. If I run that, again, it puts the new data. It shows that it was
+done successfully. For example, if I list user one, we can see user one is ID one, password is new secure
+password. It actually worked. Then finally, if I want
+to delete the user, I can just click
+this one, and now the user has been
+deleted successfully, and of course, if I
+try to get all users, there's nobody there,
+and if I try to get user one, they don't exist. We can see that this
+code is running for me. The test cases have been set up. This is just a
+really interesting, little starter for
+you to be able to work on to try and think about how you build
+applications like this. That's the end of
+this walk through. You'll find the
+code for this app in the following ungraded lab. I recommend that
+you open that lab and then move on to
+the next video for suggestions on
+specific strategies for analyzing the code.

@@ -1,0 +1,45 @@
+In this module, I'll walk
+you through how you can use an LLM to help design the
+architecture of an application. Starting from an initial
+concept and working up to building a simple
+functioning prototype. The methodology that
+you'll explore is configuration-driven
+development, or CDD. This is an approach
+to building software where the behavior
+features and settings of an application are
+controlled through external configuration
+files rather than hard coded within the
+applications core logic. This approach enhances
+software flexibility in response to changing
+requirements and can allow non technical team
+members to modify certain aspects of the
+application's behavior without code changes. We're going to be
+looking at file serialization as part of this. While I've been a part of successful engineering
+projects using CDD. The goal of this module is not to convince you to
+use CDD in your work. Instead, I want you to see an example of how an
+LLM can help you select and implement a design paradigm that broadly impacts
+a software project. This module and this course is aimed to help you consider
+the ways that LLMs can help you with major design
+choices like this one and I think CDD is a great
+first example to explore. You'll start with an overview
+of CDD so that you can understand the overall approach and its strengths
+and weaknesses. Next, you'll get a quick
+refresher about how to read, write, and serialize
+data in Python. CDD depends on reading and writing from
+configuration files, and this will also be an
+opportunity to practice using a library that you may
+not have touched for a while with the help of an LLM. Next, you'll partner
+with the LLM to structure a sample project
+using CDD approach. This project uses the
+image generation model DALL-E to, well,
+generate images. We've been very focused on
+LLMs in this specialization, so I think you'll enjoy seeing a different type of
+generative AI in action. With the help of an LLM, you'll also design the
+code in a CDD style, externalizing parameters
+in configuration files that add flexibility to
+the design of the project. You'll also be able to serialize
+the outputs of your app, making it easy for you to manage and share the images
+that you generate. I think this is a fun project, and it's a good opportunity to reflect on how an
+LLM can help you approach and consider those bigger design
+questions in your projects. With that, join me in the
+next video to get started.

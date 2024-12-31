@@ -1,0 +1,30 @@
+Table users {
+  id int [pk]
+  username varchar [unique, not null]
+  email_address varchar [unique, not null]  // Renamed from 'email'
+  password varchar [not null]
+}
+
+Table products {
+  id int [pk]
+  name varchar [not null]
+  description varchar
+  price float [not null]
+  stock_quantity int [not null]
+  quality varchar  // New attribute added
+}
+
+Table orders {
+  id int [pk]
+  user_id int [ref: > users.id, not null]
+  order_date datetime [not null]
+  status varchar [not null]
+}
+
+Table order_items {
+  id int [pk]
+  order_id int [ref: > orders.id, not null]
+  product_id int [ref: > products.id, not null]
+  quantity int [not null]
+  price float [not null]
+}
