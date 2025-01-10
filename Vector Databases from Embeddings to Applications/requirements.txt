@@ -1,0 +1,4 @@
+python==3.9.21
+tensorflow==2.14.0
+numpy==1.24.3
+sentence_transformers
