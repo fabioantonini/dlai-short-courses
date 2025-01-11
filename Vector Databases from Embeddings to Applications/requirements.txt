@@ -6,3 +6,4 @@ seaborn
 weaviate-client==3.25.3
 openai
 python-dotenv
+cupy
