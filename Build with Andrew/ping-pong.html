@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Table Tennis Game</title>
+  <style>
+    html, body { height: 100%; margin: 0; overflow: hidden; }
+    body {
+      width: 100vw; height: 100vh; box-sizing: border-box;
+      background: url('https://raw.githubusercontent.com/https-deeplearning-ai/lc-build-with-andrew-platform/main/img/tabletennis43.jpg') center center no-repeat;
+      background-size: cover;
+      display: flex; flex-direction: column;
+    }
+    #controls {
+      margin: 10px auto 0 auto;
+      background: rgba(0,32,0,0.7);
+      padding: 12px 28px; border-radius: 8px;
+      color: #fff; font-size: 18px;
+      display: flex; align-items: center; gap: 22px;
+    }
+    #scoreboard {
+      font-size: 28px; color: #fff;
+      background: rgba(0,32,0,0.7);
+      width: fit-content; margin: 16px auto 6px auto;
+      border-radius: 8px; padding: 0 18px;
+      font-weight: bold; letter-spacing: 1px;
+    }
+    #canvasHolder {
+      flex: 1 1 auto; display: flex;
+      align-items: center; justify-content: center;
+      min-height: 200px;
+    }
+    canvas {
+      display: block; background: #177847;
+      box-shadow: 0 4px 56px 6px rgba(0,0,0,0.38);
+      border-radius: 18px; max-width: 94vw; max-height: 72vh;
+      margin: 0 auto; border: 3px solid #fff7df;
+    }
+    label { margin-left: 6px; margin-right: 6px;}
+    #pointsToWin { width: 50px; font-size: 16px;}
+    #newGame {
+      font-size: 16px; padding: 4px 12px;
+      border-radius: 5px; border: none;
+      background: #75ba5b; color: #fff; cursor: pointer;
+    }
+    #newGame:hover { background: #4d9a36; }
+  </style>
+</head>
+<body>
+  <div id="controls">
+    <span>
+      <label>Difficulty:
+        <select id="difficulty">
+          <option value="easy">Easy</option>
+          <option value="medium" selected>Medium</option>
+          <option value="hard">Hard</option>
+        </select>
+      </label>
+    </span>
+    <span>
+      <label>Points to win:
+        <input id="pointsToWin" type="number" min="1" value="5">
+      </label>
+    </span>
+    <button id="newGame">New Game</button>
+    <span style="margin-left:18px;font-size:16px;">⬆️⬇️ Arrow keys to move</span>
+  </div>
+  <div id="canvasHolder">
+    <canvas id="pong"></canvas>
+  </div>
+  <div id="scoreboard">Player: 0 &nbsp;|&nbsp; Computer: 0</div>
+  <script>
+    // --- Variables ---
+    const canvas = document.getElementById('pong');
+    const ctx = canvas.getContext('2d');
+    const scoreboard = document.getElementById('scoreboard');
+    let W = 720, H = 420;
+    let paddleW = 16, paddleH = 92;
+    let playerY = 0, computerY = 0;
+    let ballX = 0, ballY = 0, ballSize = 14, ballSpeedX = 0, ballSpeedY = 0;
+    let upArrow = false, downArrow = false;
+    let playerScore = 0, computerScore = 0;
+    let gameOver = false;
+    let pointsToWin = 5;
+    let difficulty = 'medium';
+    let computerSpeed = 1.7;
+    let animationId = null;
+
+    // --- Responsive Resize ---
+    function resizeCanvas() {
+      // Keep game aspect ratio 12:7, but scale to window
+      const margin = 40;
+      W = Math.min(window.innerWidth * 0.98, 900);
+      H = W * 7/12;
+      if (H > window.innerHeight*0.74) {
+        H = window.innerHeight*0.74;
+        W = H*12/7;
+      }
+      canvas.width = W;
+      canvas.height = H;
+      paddleH = Math.round(H/4.3);
+      paddleW = Math.round(W/45);
+      ballSize = Math.round(W/51);
+    }
+    window.addEventListener('resize', function() {
+      resizeCanvas();
+      playerY = H/2 - paddleH/2;
+      computerY = H/2 - paddleH/2;
+      resetBall();
+      draw();
+    });
+
+    // --- Settings/Controls ---
+    document.getElementById('difficulty').onchange = setDifficulty;
+    function setDifficulty() {
+      difficulty = document.getElementById('difficulty').value;
+      if (difficulty == "easy") computerSpeed = 1.3;
+      if (difficulty == "medium") computerSpeed = 1.7;
+      if (difficulty == "hard") computerSpeed = 2.7;
+    }
+    document.getElementById('pointsToWin').onchange = setPointsToWin;
+    function setPointsToWin() {
+      pointsToWin = Math.max(1, parseInt(document.getElementById('pointsToWin').value) || 5);
+    }
+    document.getElementById('newGame').onclick = function() {
+      playerScore = 0; computerScore = 0;
+      gameOver = false;
+      setDifficulty();
+      setPointsToWin();
+      playerY = H/2 - paddleH/2;
+      computerY = H/2 - paddleH/2;
+      resetBall();
+      draw();
+      updateScore();
+    };
+
+    // --- Ball Start/Reset ---
+    function resetBall() {
+      ballX = W/2 - ballSize/2;
+      ballY = H/2 - ballSize/2;
+      ballSpeedX = (Math.random()<0.5?1:-1)* (W/270 + Math.random()*0.45); // più lento
+      ballSpeedY = (Math.random()-0.5)*2.0; // più lento
+    }
+
+    // --- Drawing ---
+    function draw() {
+      ctx.clearRect(0,0,W,H);
+      ctx.fillStyle = "#177847";
+      ctx.fillRect(0, 0, W, H);
+      ctx.setLineDash([10,8]);
+      ctx.strokeStyle = "#fff";
+      ctx.lineWidth = Math.max(2,Math.round(W/285));
+      ctx.beginPath();
+      ctx.moveTo(W/2, 18);
+      ctx.lineTo(W/2, H-18);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.fillStyle = "#f5e9c6";
+      ctx.fillRect(12, playerY, paddleW, paddleH);
+      ctx.fillRect(W-12-paddleW, computerY, paddleW, paddleH);
+      ctx.beginPath();
+      ctx.arc(ballX+ballSize/2, ballY+ballSize/2, ballSize/2, 0, Math.PI*2);
+      ctx.fillStyle = "#fff";
+      ctx.shadowColor="#fff";
+      ctx.shadowBlur=12;
+      ctx.fill();
+      ctx.shadowBlur=0;
+    }
+
+    function updateScore() {
+      scoreboard.innerHTML = `Player: <span style="color:#ffe082">${playerScore}</span> &nbsp;|&nbsp; Computer: <span style="color:#fff176">${computerScore}</span>`;
+    }
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === "ArrowUp") upArrow = true;
+      if (e.key === "ArrowDown") downArrow = true;
+    });
+    document.addEventListener('keyup', function(e) {
+      if (e.key === "ArrowUp") upArrow = false;
+      if (e.key === "ArrowDown") downArrow = false;
+    });
+
+    function gameLoop() {
+      if (!gameOver) {
+        // Player movement
+        if (upArrow) playerY -= H/65; // più lento
+        if (downArrow) playerY += H/65; // più lento
+        playerY = Math.max(0, Math.min(H-paddleH, playerY));
+        // Computer AI
+        let target = ballY + ballSize/2 - paddleH/2 + Math.sin(10*computerScore+playerScore)*7;
+        if (computerY < target) computerY += computerSpeed + (difficulty=='hard'?Math.abs(ballSpeedY/2):0);
+        if (computerY > target) computerY -= computerSpeed + (difficulty=='hard'?Math.abs(ballSpeedY/2):0);
+        computerY = Math.max(0, Math.min(H-paddleH, computerY));
+        // Ball movement
+        ballX += ballSpeedX;
+        ballY += ballSpeedY;
+        // Collision with top/bottom
+        if (ballY < 0) { ballY=0; ballSpeedY *= -1;}
+        if (ballY + ballSize > H) { ballY=H-ballSize; ballSpeedY*=-1;}
+        // Player paddle collision
+        if (ballX <= 12+paddleW && ballY+ballSize > playerY && ballY < playerY+paddleH) {
+          ballX=12+paddleW;
+          ballSpeedX *= -1.09;
+          let hit = ((ballY+ballSize/2) - (playerY + paddleH/2)) / (paddleH/2);
+          ballSpeedY = hit*3.5; // più lento
+        }
+        // Computer paddle collision
+        if (ballX+ballSize >= W-12-paddleW && ballY+ballSize > computerY && ballY < computerY+paddleH) {
+          ballX=W-12-paddleW-ballSize;
+          ballSpeedX *= -1.09;
+          let hit = ((ballY+ballSize/2) - (computerY + paddleH/2)) / (paddleH/2);
+          ballSpeedY = hit*3.5; // più lento
+        }
+        // Score
+        if (ballX < -ballSize) {
+          computerScore++;
+          updateScore();
+          if (computerScore >= pointsToWin) endGame("Computer");
+          else resetBall();
+        }
+        if (ballX+ballSize > W+ballSize) {
+          playerScore++;
+          updateScore();
+          if (playerScore >= pointsToWin) endGame("Player");
+          else resetBall();
+        }
+      }
+      draw();
+      animationId = requestAnimationFrame(gameLoop);
+    }
+    function endGame(winner) {
+      gameOver = true;
+      draw();
+      ctx.font = `bold ${Math.round(H/12)}px Arial`;
+      ctx.fillStyle = "#ffe082";
+      ctx.textAlign="center";
+      ctx.fillText(`${winner} Wins!`, W/2, H/2-H/20);
+      ctx.font = `${Math.round(H/22)}px Arial`;
+      ctx.fillStyle = "#fff";
+      ctx.fillText("Press New Game to play again.", W/2, H/2+H/18);
+      cancelAnimationFrame(animationId);
+    }
+    function startGame() {
+      resizeCanvas();
+      setDifficulty();
+      setPointsToWin();
+      playerScore = 0; computerScore = 0; gameOver = false;
+      playerY = H/2 - paddleH/2;
+      computerY = H/2 - paddleH/2;
+      resetBall();
+      updateScore();
+      draw();
+      if (animationId) cancelAnimationFrame(animationId);
+      animationId = requestAnimationFrame(gameLoop);
+    }
+    window.onload = startGame;
+  </script>
+</body>
+</html>

@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>🎉 The Hilarious Purple Birthday Card Machine 🎉</title>
+    <!-- Main font and some icons for style -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
+    <style>
+        /* Make the page purple and cheerful */
+        body {
+            background: linear-gradient(120deg, #d1c4e9 40%, #8e24aa 100%);
+            font-family: 'Fredoka One', Arial, sans-serif;
+            padding: 0;
+            margin: 0;
+            min-height: 100vh;
+        }
+        .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 40px;
+            margin: 40px;
+        }
+        .form-section {
+            background: #ede7f6;
+            padding: 30px 25px 25px 25px;
+            border-radius: 18px;
+            box-shadow: 0 8px 24px #9c27b028;
+            width: 320px;
+        }
+        .form-section h2 {
+            color: #8e24aa;
+            margin-bottom: 12px;
+            font-size: 1.5em;
+            letter-spacing: 1px;
+            text-shadow: 1px 1px 0 #fff, 2px 2px 0 #ba68c8;
+        }
+        label {
+            display: block;
+            color: #4a148c;
+            margin-top: 12px;
+            margin-bottom: 2px;
+            font-size: 1.1em;
+        }
+        input {
+            width: 95%;
+            padding: 7px;
+            border-radius: 7px;
+            border: 1px solid #ce93d8;
+            margin-bottom: 7px;
+            font-size: 1.05em;
+            background: #f3e5f5;
+        }
+        button {
+            background: #9c27b0;
+            color: #fcfefe;
+            border: none;
+            border-radius: 7px;
+            padding: 10px 15px;
+            margin-top: 14px;
+            margin-right: 7px;
+            font-size: 1.09em;
+            cursor: pointer;
+            box-shadow: 0 3px 7px #aba2bb36;
+            transition: background 0.2s;
+        }
+        button:hover {
+            background: #6a1b9a;
+        }
+        .cards-section {
+            flex: 1;
+            min-width: 350px;
+        }
+        .fancy-title {
+            font-size: 2.9em;
+            color: #ab47bc;
+            text-align: center;
+            margin-top: 31px;
+            margin-bottom: 14px;
+            letter-spacing: 2px;
+            text-shadow: 2px 3px 0 #ede7f6, 4px 6px 0 #ba68c8, 1px 1px 0 #fff;
+            font-family: 'Fredoka One', cursive, sans-serif;
+        }
+        .subtitle {
+            text-align: center;
+            color: #6a1b9a;
+            font-size: 1.35em;
+            margin-bottom: 25px;
+            letter-spacing: 1px;
+            font-style: italic;
+        }
+        .card-stack {
+            display: flex;
+            flex-direction: column-reverse; /* So new cards appear at the top */
+            gap: 25px;
+        }
+        .birthday-card {
+            background: linear-gradient(90deg, #ce93d8 5%, #fff3e5 85%);
+            border-radius: 22px 22px 16px 16px;
+            box-shadow: 0 8px 30px #8e24aa22;
+            padding: 32px 34px 16px 42px;
+            margin-bottom: 13px;
+            min-width: 350px;
+            max-width: 420px;
+            position: relative;
+            overflow: visible;
+            outline: 3px solid #ad1457;
+            font-size: 1.2em;
+            line-height: 1.53;
+        }
+        .birthday-card .card-title {
+            color: #8e24aa;
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 16px;
+            letter-spacing: 1px;
+            text-shadow: 1px 2px 0 #fff, 1px 1px 0 #ede7f6;
+        }
+        .card-copy-btn {
+            position: absolute;
+            top: 16px;
+            right: 12px;
+            background: #7e57c2;
+            color: #fff;
+            font-size: 0.93em;
+            padding: 7px 13px 7px 26px;
+            border-radius: 6px;
+            box-shadow: 0 2px 7px #a088c836;
+            border: none;
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+        .card-copy-btn:before {
+            content: "📋 ";
+            position: absolute;
+            left: 8px;
+        }
+        .tip {
+            color: #d500f9;
+            font-size: 0.9em;
+            margin-top: 20px;
+            text-align:center;
+        }
+        @media (max-width: 800px) {
+            .container {
+                flex-direction: column;
+                gap: 0;
+                margin: 12px;
+            }
+            .form-section {
+                width: 92vw;
+                margin-bottom: 22px;
+            }
+            .cards-section {
+                min-width: 0;
+            }
+            .birthday-card {
+                padding: 20px;
+                min-width: 0;
+                max-width: 98vw;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="fancy-title">🎈 Surprise! It’s the Hilarious Purple Card Generator 🎈</div>
+    <div class="subtitle">Create personalized, *funny* birthday messages — <b>just fill in the blanks!</b></div>
+    <div class="container">
+        <div class="form-section">
+            <h2>Fill in your birthday card</h2>
+            <!-- Five clearly labeled inputs -->
+            <label for="name">Name:</label>
+            <input id="name" type="text" placeholder="Type a name…">
+            
+            <label for="age">Age:</label>
+            <input id="age" type="number" min="1" max="200" placeholder="Enter age…">
+
+            <label for="hobby">Hobby:</label>
+            <input id="hobby" type="text" placeholder="What do they love?">
+
+            <label for="adjective">Adjective:</label>
+            <input id="adjective" type="text" placeholder="Funny describing word">
+
+            <label for="pluralNoun">Plural Noun:</label>
+            <input id="pluralNoun" type="text" placeholder="E.g. llamas, muffins">
+
+            <button onclick="generateCard()">Create Birthday Card!</button>
+            <button onclick="fillRandom()" style="background:#ab47bc;">I'm Feeling Lucky 🎲</button>
+            <div class="tip">Tip: Use “I’m feeling lucky” for a quick, silly card!</div>
+        </div>
+        <div class="cards-section">
+            <div class="card-stack" id="cardStack"></div>
+        </div>
+    </div>
+    <script>
+        // Pre-defined funny random words for the 'I'm Feeling Lucky' button
+        const funnyNames = ["Pickle", "Banana", "Monty", "Gertrude", "Disco Stu", "Sparkles", "Fluffy"];
+        const funnyHobbies = ["juggling apples", "karaoke", "collecting rubber ducks", "extreme napping", "inventing dances"];
+        const funnyAdjectives = ["sassy", "sparkly", "goofy", "legendary", "funky", "banana-flavored", "majestic"];
+        const funnyPluralNouns = ["waffles", "dinosaurs", "marshmallows", "giraffes", "aliens", "toenails", "tacos"];
+        const funnyAges = [21, 30, 42, 8, 100, 75, 58, 13, 99, 65];
+
+        // Function: Pick a random item from an array
+        function randomFrom(list) {
+            return list[Math.floor(Math.random() * list.length)];
+        }
+
+        // Fill in random funny values when user clicks "I'm feeling lucky"
+        function fillRandom() {
+            document.getElementById('name').value = randomFrom(funnyNames);
+            document.getElementById('age').value = randomFrom(funnyAges);
+            document.getElementById('hobby').value = randomFrom(funnyHobbies);
+            document.getElementById('adjective').value = randomFrom(funnyAdjectives);
+            document.getElementById('pluralNoun').value = randomFrom(funnyPluralNouns);
+        }
+
+        // Make the birthday message
+        function createFunnyMessage(name, age, hobby, adj, noun) {
+            // Simple, beginner-friendly template -- you can add your own!
+            return `
+                <div class="card-title">Happy Birthday, ${name}!</div>
+                <div>
+                    Wow, ${age} years young already? That's almost as many ${noun} as you’ve collected!
+                </div>
+                <div style="margin-top:11px;">
+                    Wishing you a totally <b>${adj}</b> year full of <i>${noun}</i> and endless <i>${hobby}</i>.
+                </div>
+                <div style="margin-top:11px;color:#512da8;font-weight:bold;">
+                    Stay awesome and eat extra cake! 🎂🥳
+                </div>
+                <div style="margin-top:15px;font-size:0.83em;color:#9c27b0;">— Your Card Machine 🤖</div>
+            `;
+        }
+
+        // Make a new card and add it to the stack
+        function generateCard() {
+            const name = document.getElementById('name').value || "???";
+            const age = document.getElementById('age').value || "??";
+            const hobby = document.getElementById('hobby').value || "mystery hobbies";
+            const adjective = document.getElementById('adjective').value || "amazing";
+            const pluralNoun = document.getElementById('pluralNoun').value || "cupcakes";
+
+            const message = createFunnyMessage(name, age, hobby, adjective, pluralNoun);
+
+            // Create a new card div
+            const cardDiv = document.createElement('div');
+            cardDiv.className = "birthday-card";
+            cardDiv.innerHTML = `
+                ${message}
+                <button class="card-copy-btn" onclick="copyCard(this)">Copy</button>
+            `;
+
+            // Add card to the stack — they stack down the page!
+            document.getElementById('cardStack').appendChild(cardDiv);
+        }
+
+        // Copy card content to clipboard
+        function copyCard(btn) {
+            // Copy only the text content of the card (excluding the button)
+            const card = btn.parentElement;
+            // Get only the card's message as plain text (but pretty for pasting!)
+            let lines = [];
+            [...card.childNodes].forEach(child => {
+                if (child.nodeType === 3) return; // skip text nodes
+                if (child.className === "card-copy-btn") return;
+                lines.push(child.innerText || child.textContent || "");
+            });
+            const fullMessage = lines.join('\n');
+            // Copy to clipboard
+            navigator.clipboard.writeText(fullMessage).then(() => {
+                btn.textContent = "Copied!";
+                setTimeout(() => btn.textContent = "Copy", 1700);
+            });
+        }
+    </script>
+</body>
+</html>

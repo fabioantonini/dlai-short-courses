@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Exercise Routine Creator</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <style>
+    body {
+      font-family: system-ui,sans-serif;
+      background: #f6f7fb;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      min-height: 100vh;
+      align-items: center;
+      justify-content: center;
+    }
+    .container {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 1px 16px rgba(0,0,0,0.05);
+      max-width: 380px;
+      width: 100%;
+      padding: 2rem 1.5rem;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+    .container h1 {
+      font-size: 1.35rem;
+      color: #223;
+      margin: 0 0 0.5rem 0;
+      text-align: center;
+    }
+    .inputs {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .inputs input,
+    .inputs select {
+      padding: 0.6em 0.8em;
+      font-size: 1em;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      outline: none;
+      transition: border 0.14s;
+      background: #f4f4fa;
+    }
+    .inputs input:focus,
+    .inputs select:focus {
+      border-color: #6683fe;
+      background: #fff;
+    }
+    button {
+      background: #4a69c9;
+      color: #fff;
+      font-size: 1em;
+      padding: 0.8em 0;
+      border: none;
+      border-radius: 6px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.15s;
+      margin-top: 0.3em;
+    }
+    button:hover {
+      background: #3750a7;
+    }
+    .output {
+      min-height: 80px;
+      padding: 1em;
+      background: #f8faff;
+      border-radius: 9px;
+      font-size: 1em;
+      color: #222;
+      margin-top: 0.3em;
+      box-sizing: border-box;
+      border: 1px solid #e5e6ef;
+      word-break: break-word;
+    }
+    @media (max-width: 500px) {
+      .container { max-width: 98vw; padding: 1.1rem 0.5rem;}
+      .output { font-size: 0.96em;}
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Exercise Routine Creator</h1>
+    <div class="inputs">
+      <input type="text" id="goal" placeholder="Fitness goal (e.g. Build muscle)" autocomplete="off">
+      <select id="equipment">
+        <option value="">Available equipment</option>
+        <option value="None">None</option>
+        <option value="Dumbbells">Dumbbells</option>
+        <option value="Resistance bands">Resistance bands</option>
+        <option value="Full gym">Full gym</option>
+      </select>
+      <input type="text" id="duration" placeholder="Preferred workout duration (e.g. 30 minutes)">
+      <input type="number" id="days" placeholder="Days per week (e.g. 3-5)" min="1" max="7">
+      <select id="experience">
+        <option value="">Experience level</option>
+        <option value="Beginner">Beginner</option>
+        <option value="Intermediate">Intermediate</option>
+        <option value="Advanced">Advanced</option>
+      </select>
+    </div>
+    <button id="generate">Generate Routine</button>
+    <div class="output" id="output" aria-live="polite"></div>
+  </div>
+  <script>
+    const generateBtn = document.getElementById('generate');
+    const output = document.getElementById('output');
+    const inputIds = ['goal','equipment','duration','days','experience'];
+
+    function getValue(id) {
+      return document.getElementById(id).value.trim();
+    }
+
+    function capitalFirst(s) {
+      return s.charAt(0).toUpperCase() + s.slice(1);
+    }
+
+    function pick(arr) {
+      return arr[Math.floor(Math.random()*arr.length)];
+    }
+
+    // Simple exercise arrays by equipment
+    const noEquipmentExercises = {
+      full: ["Bodyweight Squats", "Push-ups", "Lunges", "Plank", "Mountain Climbers", "Burpees", "Glute Bridge", "Jumping Jacks", "Triceps Dips (Chair)", "High Knees"],
+      upper: ["Push-ups", "Triceps Dips (Chair)", "Pike Push-ups", "Plank Shoulder Tap", "Superman"],
+      core: ["Plank", "Sit-ups", "Mountain Climbers", "Leg Raises", "Russian Twist", "Bicycle Crunches"],
+      lower: ["Bodyweight Squats", "Lunges", "Glute Bridge", "Step-Ups (Stairs)", "Wall Sit"],
+      cardio: ["Burpees", "Jumping Jacks", "High Knees", "Mountain Climbers"]
+    };
+    const dumbbellExercises = {
+      full: ["Dumbbell Squats", "Dumbbell Lunges", "Dumbbell Press", "Dumbbell Rows", "Goblet Squat", "Renegade Row"],
+      upper: ["Dumbbell Shoulder Press", "Dumbbell Biceps Curl", "Dumbbell Triceps Extension", "Chest Press (Floor)", "Lateral Raise"],
+      core: ["Russian Twist (Dumbbell)", "Dumbbell Side Bend", "Weighted Sit-up"],
+      lower: ["Dumbbell Deadlift", "Dumbbell Calf Raise", "Dumbbell Step-up"],
+      cardio: ["Dumbbell Thruster", "Dumbbell Swing"]
+    };
+    const bandsExercises = {
+      full: ["Band Squats", "Band Rows", "Band Chest Press", "Band Deadlift", "Band Shoulder Press"],
+      upper: ["Band Biceps Curl", "Band Triceps Pressdown", "Band Pull-apart", "Band Row"],
+      core: ["Band Pallof Press", "Band Russian Twist"],
+      lower: ["Band Squats", "Band Glute Bridge", "Band Side Steps"],
+      cardio: ["Band Jump Squats"]
+    };
+    const gymExercises = {
+      full: ["Barbell Squat", "Deadlift", "Bench Press", "Pull-ups", "Lat Pulldown"],
+      upper: ["Bench Press", "Overhead Press", "Pull-ups", "Cable Row"],
+      core: ["Cable Crunch", "Hanging Leg Raises", "Plank"],
+      lower: ["Leg Press", "Hamstring Curl", "Barbell Lunge"],
+      cardio: ["Treadmill Run", "Rowing Machine", "Cycling"]
+    };
+
+    function getExercises(equipment) {
+      switch (equipment) {
+        case 'None': return noEquipmentExercises;
+        case 'Dumbbells': return dumbbellExercises;
+        case 'Resistance bands': return bandsExercises;
+        case 'Full gym': return gymExercises;
+        default: return noEquipmentExercises;
+      }
+    }
+
+    function parseDays(days) {
+      if (!days || isNaN(days)) return 3;
+      let d = Math.max(1, Math.min(7, parseInt(days)));
+      return d;
+    }
+
+    function generateRoutine(goal, equipment, duration, days, experience) {
+      const exercises = getExercises(equipment);
+      let focus, routineDays;
+      let intro = "";
+
+      // Determine focus per goal
+      goal = goal ? goal.toLowerCase() : "";
+      if (goal.includes('muscle')) {
+        focus = ['full','upper','lower','core'];
+        intro = "Muscle-building";
+      } else if (goal.includes('weight') || goal.includes('fat')) {
+        focus = ['full','cardio','core'];
+        intro = "Weight loss";
+      } else if (goal.includes('flexib')) {
+        focus = ['core'];
+        intro = "Flexibility";
+      } else if (goal.includes('cardio') || goal.includes('endurance')) {
+        focus = ['cardio','full'];
+        intro = "Cardio";
+      } else {
+        focus = ['full','core','cardio'];
+        intro = "General fitness";
+      }
+
+      // Parse days
+      let nDays = parseDays(days);
+      let dayArr = [];
+
+      for (let i = 0; i < nDays; ++i) {
+        let dayFocus = pick(focus);
+        let exArr = [];
+        let exSrc = exercises[dayFocus] || exercises['full'];
+        // pick 4-5 different exercises per day
+        let nEx = dayFocus === 'cardio' ? 3 : 4;
+        let exs = exSrc.slice();
+        while (exArr.length < nEx && exs.length > 0) {
+          let idx = Math.floor(Math.random() * exs.length);
+          exArr.push(exs[idx]);
+          exs.splice(idx,1);
+        }
+        dayArr.push({focus:capitalFirst(dayFocus), exercises:exArr});
+      }
+
+      // Routine format
+      let text = `<strong>${intro} routine (${nDays} days/week)</strong><br>`;
+      if (duration) text += `Workout duration: <b>${duration}</b><br>`;
+      if (experience) text += `Level: <b>${experience}</b><br>`;
+      if (equipment) text += `Equipment: <b>${equipment}</b><br>`;
+      text += `<ol style="margin-top:0.7em">`;
+      dayArr.forEach((d,i)=>{
+        text += `<li><b>Day ${i+1} (${d.focus}):</b><ul style="margin:0.3em 0 0.7em 1em;">`;
+        d.exercises.forEach(e=>{
+          text += `<li>${e}</li>`;
+        });
+        text += `</ul></li>`;
+      });
+      text += "</ol>";
+      text += `<p style="font-size:0.95em;color:#555;">Rest 30-90s between sets. Adjust reps and sets based on ability.</p>`;
+      return text;
+    }
+
+    generateBtn.onclick = function(e){
+      e.preventDefault();
+      let [goal,equipment,duration,days,experience] = inputIds.map(getValue);
+
+      // Simple validation
+      if (!goal || !equipment || !duration || !days || !experience) {
+        output.innerHTML = "<span style='color:#e04444'>Please fill in all fields to generate your routine.</span>";
+        return;
+      }
+      output.innerHTML = generateRoutine(goal,equipment,duration,days,experience);
+    }
+  </script>
+</body>
+</html>

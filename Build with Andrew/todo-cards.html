@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My To-Do Card Stack</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(90deg, #e0eafc 0%, #cfdef3 100%);
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+    }
+    .page-title {
+      text-align: center;
+      font-size: 2rem;
+      margin-top: 20px;
+      color: #3366aa;
+      letter-spacing: 2px;
+      text-shadow: 1px 2px 8px #fff;
+    }
+    .container {
+      display: flex;
+      padding: 40px 20px;
+      justify-content: center; /* <--- centra orizzontalmente */
+      align-items: flex-start;
+    }
+    .form-section {
+      max-width: 350px;
+      background: #f7faff;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px #abc8e2a0;
+      padding: 25px 20px;
+      margin-right: 50px;
+    }
+    label {
+      font-size: 1rem;
+      color: #3366aa;
+      display: block;
+      margin-bottom: 7px;
+      margin-top: 17px;
+    }
+    input[type='text'] {
+      width: 95%;
+      padding: 7px 10px;
+      border: 2px solid #cfdef3;
+      border-radius: 6px;
+      margin-bottom: 7px;
+      font-size: 1rem;
+    }
+    button {
+      background: #3366aa;
+      color: #fff;
+      font-size: 1rem;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 7px;
+      margin-top: 16px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+    button:hover {
+      background: #244b76;
+    }
+    .cards-area {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+    .card {
+      background: #fff;
+      border-left: 6px solid #4da6ff;
+      border-radius: 12px;
+      min-width: 320px;
+      max-width: 370px;
+      padding: 22px 20px 16px 22px;
+      margin-bottom: 22px;
+      box-shadow: 1px 5px 18px #bbdefb60;
+      transition: border-color 0.3s;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+    .card.done {
+      border-left-color: #77dd77;
+      opacity: 0.7;
+      text-decoration: line-through;
+    }
+    .card-title {
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin-bottom: 12px;
+      color: #3366aa;
+    }
+    .task-row {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .task-checkbox {
+      margin-right: 12px;
+      width: 18px;
+      height: 18px;
+      accent-color: #4da6ff;
+      cursor: pointer;
+    }
+    .card-task {
+      font-size: 1rem;
+      color: #222;
+      flex: 1;
+    }
+    .remove-btn {
+      margin-left: auto;
+      background: #ff6666;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 7px 16px;
+      font-size: 0.95rem;
+      cursor: pointer;
+      display: none;
+      margin-top: 6px;
+      align-self: flex-end;
+    }
+    .card.done .remove-btn {
+      display: inline-block;
+    }
+  </style>
+</head>
+<body>
+  <div class="page-title">🗂️ My To-Do Card Stack</div>
+  <div class="container">
+    <form class="form-section" id="cardForm">
+      <label for="title">Title</label>
+      <input type="text" id="title" name="title" required>
+
+      <label for="task">Task</label>
+      <input type="text" id="task" name="task" required>
+
+      <button type="submit">Add To-Do Card</button>
+    </form>
+    <div class="cards-area" id="cardsArea">
+      <!-- Cards appear here -->
+    </div>
+  </div>
+  <script>
+    document.getElementById('cardForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const title = document.getElementById("title").value.trim();
+      const task = document.getElementById("task").value.trim();
+
+      // Create card element
+      const cardDiv = document.createElement("div");
+      cardDiv.className = "card";
+
+      cardDiv.innerHTML = `
+        <div class="card-title">${title}</div>
+        <div class="task-row">
+          <input type="checkbox" class="task-checkbox" title="Mark done">
+          <div class="card-task">${task}</div>
+        </div>
+        <button class="remove-btn" title="Remove this card">Remove</button>
+      `;
+
+      // Add card to the top
+      const cardsArea = document.getElementById('cardsArea');
+      cardsArea.insertBefore(cardDiv, cardsArea.firstChild);
+
+      // Checkbox behavior
+      const checkbox = cardDiv.querySelector('.task-checkbox');
+      const removeBtn = cardDiv.querySelector('.remove-btn');
+
+      checkbox.addEventListener('change', function() {
+        if (checkbox.checked) {
+          cardDiv.classList.add('done');
+        } else {
+          cardDiv.classList.remove('done');
+        }
+      });
+
+      // Remove button behavior
+      removeBtn.addEventListener('click', function() {
+        cardDiv.remove();
+      });
+
+      // Only show the remove button if task is done
+      checkbox.addEventListener('change', function() {
+        if (checkbox.checked) {
+          removeBtn.style.display = 'inline-block';
+        } else {
+          removeBtn.style.display = 'none';
+        }
+      });
+
+      // Reset form for next entry
+      document.getElementById('cardForm').reset();
+    });
+  </script>
+</body>
+</html>
