@@ -1,0 +1,35 @@
+{
+    "os": "Windows-10-10.0.19041-SP0",
+    "python": "3.8.8",
+    "heartbeatAt": "2023-08-15T13:32:13.982801",
+    "startedAt": "2023-08-15T13:32:13.029731",
+    "docker": null,
+    "cuda": null,
+    "args": [],
+    "state": "running",
+    "program": "<python with no main file>",
+    "host": "DESKTOP-R8RDII4",
+    "username": "fabio",
+    "executable": "C:\\ProgramData\\Anaconda3\\python.exe",
+    "cpu_count": 4,
+    "cpu_count_logical": 4,
+    "cpu_freq": {
+        "current": 2668.0,
+        "min": 0.0,
+        "max": 2668.0
+    },
+    "cpu_freq_per_core": [
+        {
+            "current": 2668.0,
+            "min": 0.0,
+            "max": 2668.0
+        }
+    ],
+    "disk": {
+        "total": 455.3820114135742,
+        "used": 438.2914047241211
+    },
+    "memory": {
+        "total": 5.960033416748047
+    }
+}
