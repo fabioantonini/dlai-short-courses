@@ -1,0 +1,180 @@
+Here is the same text with **all timestamps removed** and formatting cleaned:
+
+---
+
+Welcome to Lesson 3 on Dense Retrieval. Now that we've learned about embeddings in the previous lesson, let's learn about how to use them for semantic search, or search by meaning. This lesson is going to be in two parts.
+
+In the first part, we'll connect to the same database that we used in Lesson 1, but instead of doing keyword search, we will do vector search using the embeddings to perform semantic search.
+
+Then, in the second part, after becoming comfortable with querying a vector database that's already been prepared for us, we will process the text from the beginning and see how we can build from scratch a vector index.
+
+Let’s load our API keys using the same code from before. Before we do semantic search, we start by importing Cohere and setting up the Cohere Python SDK using the API key.
+
+We also set up the Weaviate client and connect to the same database. Up to this point, nothing is new.
+
+Before looking at the code for searching by embeddings for dense retrieval, let’s understand what it means conceptually.
+
+Suppose we have the query:
+“What is the capital of Canada?”
+
+And we have several possible responses in our archive:
+
+* The capital of Canada is Ottawa.
+* The capital of France is Paris.
+* Other unrelated sentences.
+
+If we plot these in embedding space, sentences with similar meaning will be close to each other. Sentences about capitals cluster together, while sentences about colors cluster elsewhere.
+
+If we project the query into that same embedding space using a search-optimized embedding model, it will be closest to the correct answer:
+“The capital of Canada is Ottawa.”
+
+This use of similarity and distance in embedding space for search is called **dense retrieval**, one of the two main approaches to semantic search (the other being re-rankers).
+
+Now, let’s see how to do dense retrieval with Weaviate.
+
+The main difference compared to keyword search (BM25) is that instead of using BM25, we use `nearText`, passing the query as a vector-based search parameter.
+
+When we run queries like:
+
+* “Who wrote Hamlet?”
+
+The system matches embeddings and retrieves text most semantically similar to the query. The top result discusses Shakespeare writing Hamlet. We also receive a distance score indicating how close the result is to the query.
+
+Comparing with keyword search:
+
+* Keyword search might return pages about Canada (monarchy, flag, early period) but not the capital.
+* Dense retrieval correctly returns the Ottawa page.
+
+Another example:
+
+* Query: “Tallest person in history”
+
+  * Keyword search returns irrelevant historical content.
+  * Dense retrieval correctly returns Robert Wadlow.
+
+Dense retrieval also supports multilingual search. Using a multilingual embedding model, a query written in German or Arabic still retrieves the correct English result.
+
+Dense retrieval is also powerful for exploration. For example:
+
+* “Film about a time travel paradox”
+  returns relevant films like *About Time* or *The Time Machine*.
+
+That concludes Part 1: consuming an existing vector database.
+
+---
+
+### Part 2: Building a Vector Search Database
+
+We now build our own vector search system from scratch.
+
+We import:
+
+* Annoy (Approximate Nearest Neighbor library)
+* Standard Python libraries
+
+Using text from a Wikipedia page (e.g., Interstellar), we copy the text and store it in a variable.
+
+A key design question is **chunking**:
+
+* Split by sentences?
+* Split by paragraphs?
+* Or other strategy?
+
+There is no universal answer. Generally:
+
+* Each chunk should contain one coherent idea.
+* Chunking depends on the use case.
+* Noisy text may require more advanced sentence splitting.
+
+If we split by sentences, some sentences may lack context.
+For example:
+“It received acclaim for its performance…”
+
+Without context, the embedding may not know what “it” refers to.
+
+A solution:
+
+* Append the page title (e.g., “Interstellar”) to each chunk.
+* This gives additional context before embedding.
+
+Once we decide on chunking:
+
+* Each chunk is embedded into a vector (e.g., 4000+ dimensions).
+* We store these vectors in an index.
+
+Using Annoy:
+
+* Create an index.
+* Insert vectors.
+* Build and save the index.
+
+To search:
+
+1. Embed the query.
+2. Send query embedding to the vector index.
+3. Retrieve the nearest neighbors.
+4. Return top results with similarity scores.
+
+Example:
+Query: “How much did the film make?”
+The system retrieves:
+“The film had a worldwide gross of over $677 million.”
+
+---
+
+### Approximate Nearest Neighbors vs Vector Databases
+
+Dense retrieval finds nearest neighbors in embedding space.
+
+To optimize speed, we use **Approximate Nearest Neighbor (ANN)** algorithms:
+
+* Annoy (Spotify)
+* FAISS (Facebook)
+* ScaNN (Google)
+
+Vector databases (e.g., Weaviate, Pinecone, Qdrant, Vespa, Chroma):
+
+* Store both vectors and text
+* Allow filtering and advanced queries
+* Easier to update without rebuilding index
+* More feature-rich
+
+ANN libraries:
+
+* Simpler setup
+* Store vectors only
+* Require rebuilding index to update
+
+Vector databases:
+
+* Handle updates
+* Provide filtering
+* Manage metadata
+* Return text directly
+
+---
+
+### Hybrid Search
+
+In practice, keyword search and vector search complement each other.
+
+Hybrid search:
+
+* Run keyword search and vector search in parallel
+* Combine scores
+* Possibly add additional ranking signals (e.g., PageRank)
+
+Search engines use many ranking signals beyond text similarity.
+
+---
+
+In the next lesson, you will learn about **re-ranking**, the second main method of semantic search, and how it improves ranking quality.
+
+---
+
+If you would like, I can now:
+
+* Create 3–4 clean slides summarizing Lesson 3
+* Create simplified diagrams for Dense Retrieval
+* Create a technical version with formulas (cosine similarity, ANN complexity)
+* Or create visual infographics like before

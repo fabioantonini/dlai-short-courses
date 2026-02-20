@@ -1,0 +1,29 @@
+Welcome to this short course, Large Language Models with Semantic Search, built in partnership with Cohere.​
+
+In this course, you'll learn how to incorporate large language models, or LLMs, into information search in your own applications.​
+
+For example, let's say you run a website with a lot of articles, picture Wikipedia for the sake of argument, or a website with a lot of e-commerce products.​
+
+Even before LLMs, it was common to have keyword search to let people search your site. But with LLMs, you can now do much more.​
+
+First, you can let users ask questions that your system then searches your site or database to answer.​
+
+Second, the LLM makes the retrieved results more relevant to the meaning or the semantics of what the user is asking about.​
+
+This course consists of the following topics.​
+
+First, it shows you how to use basic keyword search, which is also called lexical search, and powered many search systems before large language models. It consists of finding the documents that have the highest number of matching words with the query.​
+
+Then you learn how to enhance this type of keyword search with a method called re-rank. As the name suggests, this ranks the responses by relevance to the query.​
+
+After this, you learn a more advanced method of search, which has vastly improved the results of keyword search, as it tries to use the actual meaning or semantic meaning of the text to carry out the search. This method is called dense retrieval.​
+
+This uses a very powerful tool in natural language processing called embeddings, which is a way to associate a vector of numbers with every piece of text.​
+
+Semantic search consists of finding the closest documents to the query in the space of embeddings.​
+
+Similar to other models, search algorithms need to be properly evaluated. You will also learn effective ways to do this.​
+
+Finally, since LLMs can be used to generate answers, you will learn how to plug the search results into an LLM and have it generate an answer based on them.​
+
+Dense retrieval with embeddings vastly improves the question-answering capabilities of an LLM, as it first searches for and retrieves the relevant documents and then creates an answer from this retrieved information.​

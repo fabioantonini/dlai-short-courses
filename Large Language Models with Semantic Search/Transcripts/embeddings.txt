@@ -1,0 +1,96 @@
+Welcome to Lesson 2.
+
+In this lesson you will learn about embeddings.
+
+Embeddings are numerical representations of text that computers can more easily process. This makes them one of the most important components of large language models.
+
+Let’s start with the embeddings lab.
+
+This code helps us load all the API keys we need. In the classroom environment this is already done for you, but if you run it locally you would need to install some packages, for example the Cohere library.
+
+For visualizations you would also install packages such as umap-learn, Altair, and datasets for loading the Wikipedia dataset.
+
+Next, you import the Cohere library. This library provides many functions that use large language models through API calls. In this lesson we use the `embed` function, while other functions such as `generate` will be used later in the course.
+
+The next step is to create a Cohere client using your API key.
+
+Now, what is an embedding?
+
+Imagine a grid with horizontal and vertical axes. Words are placed at different coordinates. Similar words are grouped together. For example:
+
+* Sports in one region
+* Buildings and houses in another
+* Vehicles in another
+* Fruits grouped together
+
+The word “apple” would be placed among fruits. Its position might be represented by coordinates such as (5, 5).
+
+An embedding maps each word to numbers representing its position in this space.
+
+In practice, embeddings do not use just two numbers. They may use hundreds or even thousands of numbers to represent each word.
+
+Next, we import pandas as `pd`, which helps us work with tables of data.
+
+We create a small table with three words:
+
+* joy
+* happiness
+* potato
+
+We then generate embeddings for these words using the `embed` function.
+
+The function requires:
+
+* The dataset to embed
+* The column containing the text
+* The name of the embedding model
+
+The result is a vector of numbers for each word.
+
+For example, the vector for “joy” contains many numerical values.
+
+Embeddings are not limited to single words. They also work for sentences and longer texts.
+
+Consider two sentences:
+
+* “Hello, how are you?”
+* “Hi, how’s it going?”
+
+They use different words but have similar meaning. Their embeddings will be close to each other in vector space.
+
+We can create embeddings for a small dataset of sentences and visualize them.
+
+In an example with eight sentences arranged in question-answer pairs, similar sentences appear close together in the embedding space.
+
+Examples of pairs:
+
+* “What color is the sky?” → “The sky is blue.”
+* “What is an apple?” → “An apple is a fruit.”
+* “Where does the bear live?” → “The bear lives in the woods.”
+
+The closest sentence to a question is often its correct answer.
+
+This idea forms the basis of dense retrieval:
+Finding the closest vector in embedding space to answer a query.
+
+Next, we apply embeddings to a larger dataset of 2,000 Wikipedia articles.
+
+Each article contains:
+
+* Title
+* First paragraph
+* Precomputed embedding
+
+We reduce the high-dimensional embeddings to two dimensions for visualization.
+
+When plotted, similar topics cluster together. For example:
+
+* Languages appear near each other
+* Countries cluster together
+* Kings and queens cluster together
+* Soccer players cluster together
+* Artists cluster together
+
+Embeddings organize text by semantic similarity.
+
+In the next lesson, you will use embeddings to perform dense retrieval, meaning you will search for answers to queries in a large database by finding the closest embeddings.
