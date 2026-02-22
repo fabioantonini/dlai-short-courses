@@ -1,0 +1,33 @@
+Welcome to How Transformer LLMs Work.
+In this course, you learn about the main components of the LLM transformer architecture that has transformed the field of language processing.
+Our hope is that as you leave this course, you will be able to read through papers describing models and understand the details that are used to describe these architectures.
+And these intuitions will help you use LLMs better too.
+Let me introduce the main topic of this course, the transformer.
+The transformer architecture was first introduced in the 2017 paper, *Attention is All You Need* by Ashish Vaswani and others for machine translation tasks.
+The idea was to input an English sentence and have the network output a German sentence.
+The same architecture tends to be great at inputting, say, a prompt and outputting a response to that prompt like a question and the answer to that question.
+And so this helped herald the early rise of large language models.
+The original transformer architecture consisted of two main parts.
+It was an encoder and decoder.
+Consider translating English into German, the encoder preprocesses the entire input English text to extract the context needed to perform the translation.
+Then the decoder uses the encoder context to generate the German.
+The encoder and the decoder form the basis for the models used in many language models today.
+The encoder model provides rich, context-sensitive representations of the input text, and is the basis for the BERT model and most of the embedding models using RAG applications.
+The decoder model performs text generation tasks such as summarizing text, writing code, answering questions, and is the basis for most popular LLMs, such as those from OpenAI, Anthropic, Cohere, and Meta.
+Let's go over what you learned in this course.
+You first delve into recent developments in LLMs to see how a sequence of increasingly sophisticated building blocks led to the modern transformer.
+You then learn about tokenization, which consists of taking text and breaking it down into tokens that comprise words or word fragments.
+They can then be fed into the LLM.
+After that, you gain intuition about how the transformer network works, focusing on the decoder-only models.
+A generative model takes in a text prompt, and it generates a text in response by generating one token at a time.
+Here's how the generation process works.
+The model starts by mapping each input token into an embedding vector that captures the meaning of that token.
+After that, the model parses these token embeddings through a stack of transformer blocks, where each block is a specific neural network architecture that is designed to learn flexibly from data and also scale well on GPUs.
+So you learn how each block is made up of an attention layer and a feed-forward network.
+The model then uses the output vectors of the transformer blocks and passes them to the last component, the language modeling head, which generates the output token.
+By the way, I know that Transformers might seem a little bit like magic to some people, and in fact, one common experience after you learn how Transformers work is, I've heard some people go, oh, that's it.
+And I think part of the reason for that reaction is the magic of LLMs actually comes from two parts:
+One, the transformer architecture, which you learn is well worth learning.
+And second, all the incredibly rich data that the models learn from.
+So while the magic of LLMs comes not just from the transformer architecture, but also from the data, having a solid intuition of what this architecture is doing will give you better intuitions about why they behave in certain ways, as well as how to use them.
+Let's get started with Martin in the first lesson.
